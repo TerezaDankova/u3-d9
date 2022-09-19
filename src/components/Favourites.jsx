@@ -4,7 +4,7 @@ import {Container, Row, ListGroup, ListGroupItem, Col} from "react-bootstrap"
 
 const mapStateToProps = state => {
   return {
-    favorite: state.company
+    favourite: state.company
   }
 }
 const mapDispatchToProps = dispatch => {

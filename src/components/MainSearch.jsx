@@ -42,7 +42,7 @@ const MainSearch = () => {
       <Row>
         <Col xs={10} className="mx-auto my-3">
           <Link to="/favourites" className="btn btn-primary">
-            Favourites
+            Go on page with your Favorite Jobs
           </Link>
         </Col>
         <Col xs={10} className="mx-auto">

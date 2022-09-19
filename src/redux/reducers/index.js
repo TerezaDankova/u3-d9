@@ -1,5 +1,5 @@
 const initialState = {
-      favorites: [],
+      favourites: [],
 }
 
 const mainReducer = (state = initialState, action) => {
