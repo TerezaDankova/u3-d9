@@ -1,45 +1,62 @@
-import { Row, Col, Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Star, StarFill } from "react-bootstrap-icons";
+import { addToFav, removeFromFav } from "../redux/actions";
+import { connect } from "react-redux";
 
+const mapStateToProps = state => state;
 
-const mapStateToProps = state => {
-      return {
-            favorites: state.data.company_name
-      }
-}
+const mapDispatchToProps = (dispatch) => ({
+  addToFavourites: indexToAdd => {
+        dispatch(addToFav(indexToAdd))
+      },
+  removeFromFavourites: indexToRemove => {
+        dispatch(removeFromFav(indexToRemove))
+      },
+});
+
+const Job = ({ data, favourites, addToFavourites, removeFromFavourites }) => {
       
-const mapDispatchToProps = dispatch => {
-      return {
+  const isFav = favourites.includes(data.company_name);
+  
+  const toggleFavourite = () => {
+    isFav
+      ? removeFromFavourites(data.company_name)
+      : addToFavourites(data.company_name);
+  };
 
-      addToFavourites: company => {
-            dispatch({ 
-            type: "ADD_TO_FAV",
-            payload: company,
-            })
-}}
-}
+  return (
+    <Row
+      className="mx-0 mt-3 p-3"
+      style={{ border: "1px solid #00000033", borderRadius: 4 }}>
+      <Col xs={3} className="d-flex">
+        <Link to={`/${data.company_name}`} style={{color: "grey"}}>{data.company_name}</Link>
+        
+      </Col>
+      <Col xs={8}>
+        <Link to={{ pathname: data.url }} target="_blank" style={{color: "grey"}}>
+          {data.title}
+        </Link>
+      </Col>
+      <Col xs={1}>
+      {isFav ? (
+          <StarFill
+            color="green"
+            size={20}
+            className="me-4 my-auto"
+            onClick={toggleFavourite}
+          />
+        ) : (
+          <Star
+            color="gold"
+            size={16}
+            className="me-4 my-auto"
+            onClick={toggleFavourite}
+          />
+        )}
+      </Col>
+    </Row>
+  );
+};
 
-const Job = (props) => {
-     
-      return (
-            <Row className="mx-0 mt-3 p-3" style={{ border: '1px solid #00000033', borderRadius: 4 }}>
-            <Col xs={3}>
-                  <Link to={`/${props.data.company_name}`}>{props.data.company_name}</Link>
-            </Col>
-            <Col xs={6}>
-                  <Link to={props.data.url} target="_blank" rel="noreferrer">{props.data.title}</Link>
-            </Col>
-            <Col xs={3}>
-                  <Button onClick={() => {
-                  props.addToFavourites(props.data.company_name)
-                  }}
-                  variant="success">
-                  Add To Favorite
-                  </Button> 
-            </Col>
-            </Row>
-)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Job)
+export default connect(mapStateToProps, mapDispatchToProps)(Job);

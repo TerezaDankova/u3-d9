@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import JobResult from "./Job";
+import Job from "./Job";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
@@ -39,13 +38,18 @@ const MainSearch = () => {
 
   return (
     <Container>
-      <Row>
-        <Col xs={10} className="mx-auto my-3">
-          <Link to="/favourites" className="btn btn-primary">
-            Go on page with your Favorite Jobs
+      <Row className="justify-content-center pb-4">
+        <Col md={9} className="mt-3" style={{ }}>
+          <h1>Remote Jobs Search</h1>
+        </Col>
+        <Col md={3} className="mt-4">
+          <Link to="/favourites" className="btn link" style={{color: "green", fontSize: "20"}}>
+            FAVOURITES JOBS
           </Link>
         </Col>
-        <Col xs={10} className="mx-auto">
+      </Row>
+      <Row className="justify-content-center">
+        <Col md={10} className="">
           <Form onSubmit={handleSubmit}>
             <Form.Control
               type="search"
@@ -55,10 +59,10 @@ const MainSearch = () => {
             />
           </Form>
         </Col>
-        <Col xs={8} className="mx-auto mb-5">
+        <Col md={8} className="">
           {jobResults &&
             jobResults.map((jobData) => (
-              <JobResult key={jobData._id} data={jobData} />
+              <Job key={jobData._id} data={jobData} />
             ))}
         </Col>
       </Row>
